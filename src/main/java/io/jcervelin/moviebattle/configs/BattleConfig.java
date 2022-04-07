@@ -1,16 +1,14 @@
 package io.jcervelin.moviebattle.configs;
 
 import io.jcervelin.moviebattle.domains.Movie;
-import io.jcervelin.moviebattle.domains.entities.MovieEntity;
 import io.jcervelin.moviebattle.gateways.databases.MovieRepository;
 import io.jcervelin.moviebattle.usecases.MovieMapCache;
-import java.time.Clock;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.time.Clock;
+import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Configuration
 public class BattleConfig {
@@ -21,12 +19,12 @@ public class BattleConfig {
 
   @Bean
   public MovieMapCache movieMapCache(MovieRepository movieRepository) {
-    final List<MovieEntity> omdbEntities = movieRepository.findAll();
-    final Map<String, Movie> movies = new ConcurrentHashMap<>();
+    var omdbEntities = movieRepository.findAll();
+    var movies = new ConcurrentHashMap<String, Movie>();
 
     omdbEntities.forEach(
         omdbEntity -> {
-          final Movie movie =
+          var movie =
               Movie.builder()
                   .id(omdbEntity.getId())
                   .imdbRating(omdbEntity.getImdbRating())

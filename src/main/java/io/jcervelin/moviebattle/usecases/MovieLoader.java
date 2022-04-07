@@ -3,18 +3,20 @@ package io.jcervelin.moviebattle.usecases;
 import io.jcervelin.moviebattle.domains.entities.MovieEntity;
 import io.jcervelin.moviebattle.gateways.clients.omdpapi.OmdbApi;
 import io.jcervelin.moviebattle.gateways.clients.omdpapi.domains.OmdbMovieDetailsResponse;
-import io.jcervelin.moviebattle.gateways.clients.omdpapi.domains.OmdbMovieSummaryResponse;
 import io.jcervelin.moviebattle.gateways.databases.MovieRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MovieLoader {
 
   private static final String TRUE = "True";
@@ -33,6 +35,8 @@ public class MovieLoader {
 
     final List<OmdbMovieDetailsResponse> movieDetails =
         futures.stream().map(CompletableFuture::join).collect(Collectors.toList());
+
+    log.debug("Movies loaded from Omdb Api: {}", movieDetails);
 
     final List<MovieEntity> omdbEntities =
         movieDetails.stream()
@@ -55,11 +59,11 @@ public class MovieLoader {
     int pages = 1;
 
     while (hasMovies) {
-      final OmdbMovieSummaryResponse omdbMovieSummaryResponse =
+      var omdbMovieSummaryResponse =
           omdbApi.searchMovie(apiKey, keyword, pages);
 
       if (TRUE.equals(omdbMovieSummaryResponse.getResponse())) {
-        final List<CompletableFuture<OmdbMovieDetailsResponse>> completableFutures =
+        var completableFutures =
             omdbMovieSummaryResponse.getMovieSummaryList().stream()
                 .map(movieSummary -> getMovies(movieSummary.getImdbId()))
                 .collect(Collectors.toList());

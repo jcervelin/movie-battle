@@ -5,13 +5,16 @@ import io.jcervelin.moviebattle.domains.entities.GameSessionEntity;
 import io.jcervelin.moviebattle.domains.entities.GameSessionIdEntity;
 import io.jcervelin.moviebattle.domains.exceptions.SessionNotFoundException;
 import io.jcervelin.moviebattle.gateways.databases.GameSessionRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
 import java.time.Clock;
 import java.time.LocalDateTime;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class GameSessionManagement {
 
   private static final Integer INITIAL_VALUE = 0;
@@ -30,7 +33,7 @@ public class GameSessionManagement {
    *     GameSessionEntity#getEnd()} nao esta nulo
    */
   public boolean isValid(String sessionId) {
-    final GameSessionIdEntity id = createIdObject(sessionId);
+    var id = createIdObject(sessionId);
     return gameSessionRepository.existsByIdAndEndIsNull(id);
   }
 
@@ -40,13 +43,17 @@ public class GameSessionManagement {
   }
 
   public GameSession createNew() {
-    final GameSessionEntity gameSessionEntity = createEntityObject();
+    var gameSessionEntity = createEntityObject();
 
     // Se o usuario tiver uma sessao aberta, retornar a mesma sessao
-    return gameSessionRepository.hasAnyOpenSession(gameSessionEntity.getId().getUsername()).stream()
-        .findFirst()
-        .map(this::createGameSession)
-        .orElse(saveNewAndReturn(gameSessionEntity));
+    var gameSession =
+        gameSessionRepository.hasAnyOpenSession(gameSessionEntity.getId().getUsername()).stream()
+            .findFirst()
+            .map(this::createGameSession)
+            .orElse(saveNewAndReturn(gameSessionEntity));
+
+    log.info("Session created: {}", gameSession);
+    return gameSession;
   }
 
   private GameSession saveNewAndReturn(GameSessionEntity gameSessionEntity) {
@@ -55,24 +62,24 @@ public class GameSessionManagement {
   }
 
   public GameSession end(String sessionId) {
-    final GameSessionEntity gameSessionEntity = findSessionEntity(sessionId);
+    var gameSessionEntity = findSessionEntity(sessionId);
     gameSessionEntity.setEnd(LocalDateTime.now(clock));
     gameSessionRepository.save(gameSessionEntity);
     return createGameSession(gameSessionEntity);
   }
 
   public GameSession findSession(String sessionId) {
-    final GameSessionEntity gameSessionEntity = findSessionEntity(sessionId);
+    var gameSessionEntity = findSessionEntity(sessionId);
     return createGameSession(gameSessionEntity);
   }
 
   private GameSessionEntity findSessionEntity(String sessionId) {
-    final GameSessionIdEntity id = createIdObject(sessionId);
+    var id = createIdObject(sessionId);
     return gameSessionRepository.findById(id).orElseThrow(SessionNotFoundException::new);
   }
 
   private GameSessionIdEntity createIdObject() {
-    final String sessionId = uuidGenerator.generate();
+    var sessionId = uuidGenerator.generate();
     return createIdObject(sessionId);
   }
 
@@ -104,7 +111,7 @@ public class GameSessionManagement {
   }
 
   private GameSessionEntity createGameSessionEntity(GameSession gameSession) {
-    final GameSessionIdEntity gameSessionIdEntity = createIdObject(gameSession.getSessionId());
+    var gameSessionIdEntity = createIdObject(gameSession.getSessionId());
 
     return GameSessionEntity.builder()
         .id(gameSessionIdEntity)

@@ -1,13 +1,6 @@
 package io.jcervelin.moviebattle.security.configs;
 
-import static io.jcervelin.moviebattle.configs.PermitionTypes.ADMIN;
-import static io.jcervelin.moviebattle.configs.PermitionTypes.OPERATOR;
-import static io.jcervelin.moviebattle.configs.PermitionTypes.PUBLIC;
-
 import io.jcervelin.moviebattle.domains.BattleProperties;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -25,26 +18,18 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import java.util.Arrays;
+
+import static io.jcervelin.moviebattle.configs.PermitionTypes.ADMIN;
+import static io.jcervelin.moviebattle.configs.PermitionTypes.OPERATOR;
+import static io.jcervelin.moviebattle.configs.PermitionTypes.PUBLIC;
+
 @Configuration
 @EnableResourceServer
 @RequiredArgsConstructor
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   private final BattleProperties battleProperties;
-  //  private static final String[] PUBLIC = {
-  //    "/oauth/token",
-  //    "/v2/api-docs",
-  //    "/configuration/ui",
-  //    "/swagger-resources/**",
-  //    "/configuration/security",
-  //    "/swagger-ui.html",
-  //    "/swagger-ui/**",
-  //    "/webjars/**"
-  //  };
-  //
-  //  private static final String[] OPERATOR = {"/api/movie-battle/**"};
-  //
-  //  private static final String[] ADMIN = {"/actuator/**", "/api/load-movies"};
 
   @Autowired private JwtTokenStore tokenStore;
 
@@ -55,10 +40,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
-    final Map<String, List<String>> routes = battleProperties.getSecurity().getRoutes();
-    final String[] publicPermissions = routes.get(PUBLIC.name()).toArray(String[]::new);
-    final String[] operatorPermissions = routes.get(OPERATOR.name()).toArray(String[]::new);
-    final String[] adminPermissions = routes.get(ADMIN.name()).toArray(String[]::new);
+    var routes = battleProperties.getSecurity().getRoutes();
+    var publicPermissions = routes.get(PUBLIC.name()).toArray(String[]::new);
+    var operatorPermissions = routes.get(OPERATOR.name()).toArray(String[]::new);
+    var adminPermissions = routes.get(ADMIN.name()).toArray(String[]::new);
 
     http.authorizeRequests()
         .antMatchers(publicPermissions)
@@ -75,13 +60,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration corsConfiguration = new CorsConfiguration();
+    var corsConfiguration = new CorsConfiguration();
     corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
     corsConfiguration.setAllowedMethods(Arrays.asList("POST", "DELETE", "PUT", "GET", "PATCH"));
     corsConfiguration.setAllowCredentials(true);
     corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
 
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    var source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", corsConfiguration);
     return source;
   }
@@ -89,8 +74,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   @Bean
   FilterRegistrationBean<CorsFilter> corsFilter() {
 
-    FilterRegistrationBean<CorsFilter> bean =
-        new FilterRegistrationBean<>(new CorsFilter(corsConfigurationSource()));
+    var bean = new FilterRegistrationBean<>(new CorsFilter(corsConfigurationSource()));
     bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
     return bean;
   }

@@ -5,9 +5,10 @@ import io.jcervelin.moviebattle.domains.MovieChoice;
 import io.jcervelin.moviebattle.domains.MoviePair;
 import io.jcervelin.moviebattle.domains.QuestionResponse;
 import io.jcervelin.moviebattle.usecases.questionvalidators.QuestionValidator;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +39,7 @@ public class QuestionGenerator {
     // Se forem iguais, tentar novamente por recursao
     // Verificar se questoes ja nao foram previamente respondidas.
     // Se ja foram, tentar novamente por recursao
-    final boolean shouldTryNewQuestions =
+    var shouldTryNewQuestions =
         questionValidators.stream()
             .anyMatch(questionValidator -> questionValidator.tryNewQuestions(moviePair));
 

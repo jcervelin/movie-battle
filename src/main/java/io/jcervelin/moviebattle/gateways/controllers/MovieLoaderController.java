@@ -1,19 +1,21 @@
 package io.jcervelin.moviebattle.gateways.controllers;
 
-import static io.jcervelin.moviebattle.domains.EndpointConstants.API_LOAD_MOVIES;
-
 import io.jcervelin.moviebattle.usecases.MovieLoader;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+import static io.jcervelin.moviebattle.domains.EndpointConstants.API_LOAD_MOVIES;
 
 @RestController
 @RequestMapping(path = API_LOAD_MOVIES)
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(
     value = "Movie Loader - there are 198 preloaded movies (Api key requered for new movies)",
     tags = {"Where you load movies"})
+@Slf4j
 public class MovieLoaderController {
 
   private final MovieLoader movieLoader;
@@ -36,6 +39,7 @@ public class MovieLoaderController {
       })
   @PostMapping
   public ResponseEntity<Void> loadMovies(@RequestParam List<String> keywords) {
+    log.info("keywords to be searched: {}", keywords);
     movieLoader.loadMovies(keywords);
     return ResponseEntity.created(null).build();
   }

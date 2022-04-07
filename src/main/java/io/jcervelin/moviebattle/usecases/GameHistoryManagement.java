@@ -44,8 +44,8 @@ public class GameHistoryManagement {
   }
 
   private MoviePair createMoviePair(GameHistoryEntity gameHistoryEntity) {
-    final Movie choice1 = movieMapCache.getMovies().get(gameHistoryEntity.getChoice1().getId());
-    final Movie choice2 = movieMapCache.getMovies().get(gameHistoryEntity.getChoice2().getId());
+    var choice1 = movieMapCache.getMovies().get(gameHistoryEntity.getChoice1().getId());
+    var choice2 = movieMapCache.getMovies().get(gameHistoryEntity.getChoice2().getId());
 
     return MoviePair.builder()
         .sessionId(gameHistoryEntity.getSessionId())
