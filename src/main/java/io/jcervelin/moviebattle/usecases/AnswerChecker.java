@@ -4,11 +4,13 @@ import io.jcervelin.moviebattle.domains.AnswerRequest;
 import io.jcervelin.moviebattle.domains.AnswerResponse;
 import io.jcervelin.moviebattle.domains.GameSession;
 import io.jcervelin.moviebattle.domains.Movie;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +20,7 @@ public class AnswerChecker {
   private final GameSessionManagement gameSessionManagement;
   private final Clock clock;
 
+  @Transactional
   public AnswerResponse checkAnswer(AnswerRequest request) {
 
     // Chama PlayDecider para receber o filme com maior score * votos

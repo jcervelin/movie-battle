@@ -59,8 +59,7 @@ public class MovieLoader {
     int pages = 1;
 
     while (hasMovies) {
-      var omdbMovieSummaryResponse =
-          omdbApi.searchMovie(apiKey, keyword, pages);
+      var omdbMovieSummaryResponse = omdbApi.searchMovie(apiKey, keyword, pages);
 
       if (TRUE.equals(omdbMovieSummaryResponse.getResponse())) {
         var completableFutures =

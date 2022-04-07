@@ -7,6 +7,7 @@ import io.jcervelin.moviebattle.domains.QuestionResponse;
 import io.jcervelin.moviebattle.usecases.questionvalidators.QuestionValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class QuestionGenerator {
   private final GameHistoryManagement gameHistoryManagement;
   private final List<QuestionValidator> questionValidators;
 
+  @Transactional
   public QuestionResponse getMoviePair(String sessionId) {
 
     // Se o usuario tiver uma questao aberta, retornar a mesma questao

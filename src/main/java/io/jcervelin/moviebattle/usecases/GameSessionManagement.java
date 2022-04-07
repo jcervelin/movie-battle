@@ -8,6 +8,7 @@ import io.jcervelin.moviebattle.gateways.databases.GameSessionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -42,6 +43,7 @@ public class GameSessionManagement {
     gameSessionRepository.save(gameSessionEntity);
   }
 
+  @Transactional
   public GameSession createNew() {
     var gameSessionEntity = createEntityObject();
 
@@ -61,6 +63,7 @@ public class GameSessionManagement {
     return createGameSession(gameSessionEntity);
   }
 
+  @Transactional
   public GameSession end(String sessionId) {
     var gameSessionEntity = findSessionEntity(sessionId);
     gameSessionEntity.setEnd(LocalDateTime.now(clock));
