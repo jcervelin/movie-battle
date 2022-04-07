@@ -1,0 +1,91 @@
+plugins {
+    id "com.diffplug.spotless" version "${spotlessVersion}"
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
+    id 'java'
+    id 'jacoco'
+}
+
+group = 'io.jcervelin'
+version = "${appVersion}"
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
+    implementation "org.springframework.cloud:spring-cloud-starter-netflix-ribbon"
+    implementation "org.springframework.cloud:spring-cloud-starter-oauth2"
+    implementation "org.hibernate:hibernate-validator:${hibernateValidation}"
+    implementation "io.springfox:springfox-boot-starter:${swaggerVersion}"
+    implementation "io.springfox:springfox-swagger2:${swaggerVersion}"
+
+    compileOnly 'org.projectlombok:lombok'
+
+    runtimeOnly 'com.h2database:h2'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+spotless {
+    java {
+        googleJavaFormat("${googleJavaFormatVersion}")
+    }
+}
+
+jacoco {
+    toolVersion = "${jacocoToolVersion}"
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            element = 'CLASS'
+            excludes = [
+                    'io.jcervelin.moviebattle.MovieBattleApplication',
+                    'io.jcervelin.moviebattle.security.*',
+                    'io.jcervelin.moviebattle.gateways.clients.*',
+                    'io.jcervelin.moviebattle.domains.*',
+                    'io.jcervelin.moviebattle.usecases.MovieLoader',
+                    'io.jcervelin.moviebattle.gateways.controllers.MovieLoaderController'
+            ]
+            limit {
+                counter = 'METHOD'
+                value = 'COVEREDRATIO'
+                minimum = 0.8
+            }
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = 0.8
+            }
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.8
+            }
+        }
+    }
+}

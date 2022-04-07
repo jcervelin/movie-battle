@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: movie-battle
+  datasource:
+    url: jdbc:h2:mem:devdb
+    username: sa
+    password:
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+
+jwt:
+  secret: MYSECRET
+  expiration: 3600000
+oauth:
+  client:
+    name: myname
+    secret: secret123
+
+clients:
+  movie-api: https://www.omdbapi.com/
+  api-key: PLACE_YOUR_KEY
+
+app:
+  max-errors: 3
+  security:
+    routes:
+      PUBLIC:
+        - "/oauth/token"
+        - "/v2/api-docs"
+        - "/configuration/ui"
+        - "/swagger-resources/**"
+        - "/configuration/security"
+        - "/swagger-ui.html"
+        - "/swagger-ui/**"
+        - "/webjars/**"
+      OPERATOR:
+        - "/api/movie-battle/**"
+      ADMIN:
+        - "/actuator/**"
+        - "/api/load-movies"
