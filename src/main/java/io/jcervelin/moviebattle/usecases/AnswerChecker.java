@@ -4,13 +4,12 @@ import io.jcervelin.moviebattle.domains.AnswerRequest;
 import io.jcervelin.moviebattle.domains.AnswerResponse;
 import io.jcervelin.moviebattle.domains.GameSession;
 import io.jcervelin.moviebattle.domains.Movie;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor

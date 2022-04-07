@@ -1,6 +1,11 @@
 package io.jcervelin.moviebattle.security.configs;
 
+import static io.jcervelin.moviebattle.configs.PermitionTypes.ADMIN;
+import static io.jcervelin.moviebattle.configs.PermitionTypes.OPERATOR;
+import static io.jcervelin.moviebattle.configs.PermitionTypes.PUBLIC;
+
 import io.jcervelin.moviebattle.domains.BattleProperties;
+import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -17,12 +22,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
-import java.util.Arrays;
-
-import static io.jcervelin.moviebattle.configs.PermitionTypes.ADMIN;
-import static io.jcervelin.moviebattle.configs.PermitionTypes.OPERATOR;
-import static io.jcervelin.moviebattle.configs.PermitionTypes.PUBLIC;
 
 @Configuration
 @EnableResourceServer

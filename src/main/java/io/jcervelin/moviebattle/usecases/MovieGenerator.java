@@ -2,10 +2,9 @@ package io.jcervelin.moviebattle.usecases;
 
 import io.jcervelin.moviebattle.domains.Movie;
 import io.jcervelin.moviebattle.domains.exceptions.MovieNotFoundException;
+import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Random;
 
 @Service
 @RequiredArgsConstructor

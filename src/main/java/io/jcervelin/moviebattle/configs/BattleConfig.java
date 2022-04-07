@@ -3,12 +3,11 @@ package io.jcervelin.moviebattle.configs;
 import io.jcervelin.moviebattle.domains.Movie;
 import io.jcervelin.moviebattle.gateways.databases.MovieRepository;
 import io.jcervelin.moviebattle.usecases.MovieMapCache;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import java.time.Clock;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class BattleConfig {

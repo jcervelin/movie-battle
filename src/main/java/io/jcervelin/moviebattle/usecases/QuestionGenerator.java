@@ -5,11 +5,10 @@ import io.jcervelin.moviebattle.domains.MovieChoice;
 import io.jcervelin.moviebattle.domains.MoviePair;
 import io.jcervelin.moviebattle.domains.QuestionResponse;
 import io.jcervelin.moviebattle.usecases.questionvalidators.QuestionValidator;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

@@ -5,13 +5,12 @@ import io.jcervelin.moviebattle.domains.entities.GameSessionEntity;
 import io.jcervelin.moviebattle.domains.entities.GameSessionIdEntity;
 import io.jcervelin.moviebattle.domains.exceptions.SessionNotFoundException;
 import io.jcervelin.moviebattle.gateways.databases.GameSessionRepository;
+import java.time.Clock;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.Clock;
-import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor

@@ -3,13 +3,12 @@ package io.jcervelin.moviebattle.usecases;
 import io.jcervelin.moviebattle.domains.HallPosition;
 import io.jcervelin.moviebattle.domains.entities.IHallPositionProjection;
 import io.jcervelin.moviebattle.gateways.databases.GameSessionRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

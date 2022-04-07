@@ -1,5 +1,9 @@
 package io.jcervelin.moviebattle.gateways.controllers;
 
+import static io.jcervelin.moviebattle.domains.EndpointConstants.API_MOVIE_BATTLE;
+import static io.jcervelin.moviebattle.domains.EndpointConstants.CREATE_SESSION;
+import static io.jcervelin.moviebattle.domains.EndpointConstants.DELETE_SESSION;
+
 import io.jcervelin.moviebattle.domains.GameSession;
 import io.jcervelin.moviebattle.domains.QuestionResponse;
 import io.jcervelin.moviebattle.usecases.GameSessionManagement;
@@ -14,10 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import static io.jcervelin.moviebattle.domains.EndpointConstants.API_MOVIE_BATTLE;
-import static io.jcervelin.moviebattle.domains.EndpointConstants.CREATE_SESSION;
-import static io.jcervelin.moviebattle.domains.EndpointConstants.DELETE_SESSION;
 
 @RestController
 @RequiredArgsConstructor
