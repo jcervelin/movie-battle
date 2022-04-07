@@ -1,0 +1,18 @@
+HELP.md
+.gradle
+build/
+bin/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+
+**/.DS_Store
+
+**/src/main/generated/
