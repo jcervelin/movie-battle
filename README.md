@@ -62,7 +62,7 @@ Call getMovies and answer to get more points.
 The when ends when user makes 3 mistakes and the session dies.
 
 
-#### Encerre a sessao
+#### Finish the session
 It's also possible to end the session before the 3 errors.
 
 ```
