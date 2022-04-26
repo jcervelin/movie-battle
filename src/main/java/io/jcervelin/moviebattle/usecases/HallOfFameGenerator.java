@@ -20,8 +20,7 @@ public class HallOfFameGenerator {
   public List<HallPosition> getTop10() {
 
     final List<IHallPositionProjection> top10Players = repository.findTop10Players();
-    // Converte as projecoes em HallPosition e usa sua posicao
-    // na lista para definir o lugar no Hall of Fame
+    // Converts projections into HallPosition and lists top10Players
     var top10 =
         IntStream.rangeClosed(1, top10Players.size())
             .boxed()

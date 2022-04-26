@@ -45,7 +45,7 @@ public class GameSessionRepositoryTest {
     target.saveAll(
         List.of(user1Entity, user2Entity, user1EntityWithGreaterScoreAndDifferentSession));
 
-    // deve retornar apenas user1EntityWithGreaterScoreAndDifferentSession e user2Entity
+    // must return only user1EntityWithGreaterScoreAndDifferentSession and user2Entity
     final List<IHallPositionProjection> top10Players = target.findTop10Players();
 
     assertThat(top10Players.size()).isEqualTo(2);

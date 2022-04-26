@@ -21,7 +21,7 @@ public class QuestionGenerator {
   @Transactional
   public QuestionResponse getMoviePair(String sessionId) {
 
-    // Se o usuario tiver uma questao aberta, retornar a mesma questao
+    // If user has any open question, returns it instead of creating a new one
     if (gameHistoryManagement.hasAnyOpenQuestion(sessionId)) {
       var openedQuestions = gameHistoryManagement.getOpenedQuestion(sessionId);
       return createResponse(openedQuestions.getChoice1(), openedQuestions.getChoice2());
@@ -31,15 +31,13 @@ public class QuestionGenerator {
 
   private QuestionResponse validateAndLinkSessionToMovies(String sessionId) {
 
-    // Criar dois filmes randomicamente
+    // Generates two random movies
     var choice1 = movieGenerator.get();
     var choice2 = movieGenerator.get();
 
     var moviePair = createMoviePairDto(sessionId, choice1, choice2);
 
-    // Se forem iguais, tentar novamente por recursao
-    // Verificar se questoes ja nao foram previamente respondidas.
-    // Se ja foram, tentar novamente por recursao
+    // If movies are the same or user already answered that question, retry using recursion
     var shouldTryNewQuestions =
         questionValidators.stream()
             .anyMatch(questionValidator -> questionValidator.tryNewQuestions(moviePair));
@@ -48,8 +46,8 @@ public class QuestionGenerator {
       return validateAndLinkSessionToMovies(sessionId);
     }
 
-    // Linkar usuario com a questao/movies, para evitar que usuario faca novas
-    // perguntas antes de responder as abertas
+    // Link user to question/movie to avoid this user to open new questions without answering
+    // the previous ones
     gameHistoryManagement.linkQuestionToUser(moviePair);
 
     return createResponse(choice1, choice2);

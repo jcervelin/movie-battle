@@ -25,12 +25,13 @@ public class GameSessionManagement {
   private final Clock clock;
 
   /**
-   * Uma sessao e considerada valida when ela existe, esta linkada ao usuario logado e nao esta
-   * encerrada, ou seja, quando ({@link GameSessionEntity#getEnd()} nao esta nulo)
+   * It's considered a valid session when: it exists, it's linked to the logged user and it's not
+   * ended, i.e. when ({@link GameSessionEntity#getEnd()} is not null)
    *
-   * @param sessionId a ser usada na query, juntamente com o username do contexto
-   * @return true se sessao existe, esta linkada com usuario do contexto e {@link
-   *     GameSessionEntity#getEnd()} nao esta nulo
+   * @param sessionId, together with context's username are they keys to check whether the session
+   *     is valid or not
+   * @return true if session exists and it's linked to logged user {@link
+   *     GameSessionEntity#getEnd()} is not null
    */
   public boolean isValid(String sessionId) {
     var id = createIdObject(sessionId);
@@ -46,7 +47,7 @@ public class GameSessionManagement {
   public GameSession createNew() {
     var gameSessionEntity = createEntityObject();
 
-    // Se o usuario tiver uma sessao aberta, retornar a mesma sessao
+    // Returns existing session, if any
     var gameSession =
         gameSessionRepository.hasAnyOpenSession(gameSessionEntity.getId().getUsername()).stream()
             .findFirst()

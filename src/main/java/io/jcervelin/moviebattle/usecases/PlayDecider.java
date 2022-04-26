@@ -20,7 +20,7 @@ public class PlayDecider {
 
   public Movie theWinnerIs(String session) {
 
-    // Recuperar questao aberta linkada com a sessao no request
+    // Retrieve open question linked to session in the request
     var moviePair = gameHistoryManagement.getOpenedQuestion(session);
 
     final Movie choice1 = moviePair.getChoice1();
@@ -32,7 +32,7 @@ public class PlayDecider {
     var winner = movieFactor1.compareTo(movieFactor2) > 0 ? choice1 : choice2;
     log.info("The winner is: {}", winner);
 
-    // marcar questao como respondida
+    // mark question as answered
     gameHistoryManagement.markAsAnswered(session);
 
     return winner;

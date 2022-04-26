@@ -69,7 +69,7 @@ public class QuestionGeneratorTest {
 
     final QuestionResponse expectedQuestionResponse = createQuestionResponse(expectedMoviePair2);
 
-    // Dois primeiros filmes sao duplicados, entao tente novamente
+    // The two first movies are duplicated, retry
     when(gameHistoryManagement.hasAnyOpenQuestion(SESSION_ID)).thenReturn(false);
     when(sameQuestionValidator.tryNewQuestions(expectedMoviePair)).thenReturn(true);
     when(sameQuestionValidator.tryNewQuestions(expectedMoviePair2)).thenReturn(false);
@@ -91,8 +91,7 @@ public class QuestionGeneratorTest {
     final MoviePair expectedMoviePair = createMoviePair(movies.get(0), movies.get(1));
     final QuestionResponse expectedQuestionResponse = createQuestionResponse(expectedMoviePair);
 
-    // Tentou criar uma questao, mas o usuario ja havia outra
-    // pergunta aberta, entao retornou a aberta
+    // Tried to create a question, without have answered the previous one, so return open question
     when(gameHistoryManagement.hasAnyOpenQuestion(SESSION_ID)).thenReturn(true);
     when(gameHistoryManagement.getOpenedQuestion(SESSION_ID))
         .thenReturn(createMoviePair(movies.get(0), movies.get(1)));
@@ -115,7 +114,7 @@ public class QuestionGeneratorTest {
 
     final QuestionResponse expectedQuestionResponse = createQuestionResponse(expectedMoviePair2);
 
-    // Dois primeiros filmes ja foram respondidos, entao tente novamente
+    // The user has already answered the question, retry
     when(gameHistoryManagement.hasAnyOpenQuestion(SESSION_ID)).thenReturn(false);
     when(sameQuestionValidator.tryNewQuestions(expectedMoviePair)).thenReturn(false);
     when(sameQuestionValidator.tryNewQuestions(expectedMoviePair2)).thenReturn(false);

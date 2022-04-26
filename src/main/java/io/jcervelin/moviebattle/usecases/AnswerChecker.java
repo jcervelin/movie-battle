@@ -22,19 +22,19 @@ public class AnswerChecker {
   @Transactional
   public AnswerResponse checkAnswer(AnswerRequest request) {
 
-    // Chama PlayDecider para receber o filme com maior score * votos
+    // Calls PlayDecider find out what's the movie with higher score * votes
     var winner = playDecider.theWinnerIs(request.getSessionId());
 
-    // Recuperar sessao do jogo
+    // Retrieve game session
     var gameSession = gameSessionManagement.findSession(request.getSessionId());
 
-    // Adiciona 1 ponto ao score ou ao numero de erros, dependendo da escolha do usuario
+    // Increments 1 point to score or to errors, depending on users choice
     applyScoreOrErrorToEntity(request, gameSession, winner);
 
-    // Verifica se deve encerrar o jogo
+    // checks whether to finish the game
     shouldEndGame(gameSession);
 
-    // atualiza a sessao
+    // update session
     gameSessionManagement.update(gameSession);
 
     return createAnswerResponse(gameSession);
