@@ -41,3 +41,6 @@ app:
       ADMIN:
         - "/actuator/**"
         - "/api/load-movies"
+java:
+  runtime:
+    version: 11
